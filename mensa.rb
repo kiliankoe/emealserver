@@ -10,7 +10,7 @@ class MensaScraper
     end
   end
 
-  def get_mensa_list
+  def mensa_list
     menus = @doc.css('.speiseplan')
     menus.each do |menu|
       mensa = menu.css('thead .text').text
@@ -24,9 +24,22 @@ class MensaScraper
     end
   end
 
+  def mensa_menu(mensa)
+    menus = @doc.css('.speiseplan')
+    menus.each do |menu|
+      if menu.css('thead .text').text.downcase == mensa.downcase
+        meals = menu.css('tbody tr')
+        meals.each do |meal|
+          puts meal
+        end
+      end
+    end
+  end
+
 end
 
 mensa = MensaScraper.new
-mensa.get_mensa_list do |m|
-  puts m
-end
+# mensa.mensa_list do |m|
+#   puts m
+# ends
+mensa.mensa_menu 'Mensa Reichenbachstraße'
